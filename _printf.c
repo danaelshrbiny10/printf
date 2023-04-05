@@ -30,6 +30,27 @@ int _printf(const char* format, ...) {
                     }
                     break;
                 }
+                case 'd':
+                case 'i': {
+                    int num = va_arg(args, int); // retrieve the next argument as an int
+                    if (num < 0) { // handle negative numbers
+                        putchar('-');
+                        num = -num;
+                        num_chars_printed++;
+                    }
+                    int div = 1;
+                    while (num / div >= 10) { // calculate the divisor to extract each digit of the number
+                        div *= 10;
+                    }
+                    while (div > 0) { // extract each digit of the number and print it to stdout
+                        int digit = num / div;
+                        putchar(digit + '0');
+                        num = num % div;
+                        div /= 10;
+                        num_chars_printed++;
+                    }
+                    break;
+                }
                 case '%': {
                     putchar(ch); // print a '%' character to stdout
                     num_chars_printed++;
